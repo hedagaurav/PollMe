@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    PollMe | Poll Details
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <!--to display error messages using if else like this-->
+            {% comment %}
+                {% if error %}
+                    <h2>Error No Choices</h2>
+                {% else %}
+                    block of result
+                    <ul><li> show result </li></ul>
+            {% endcomment %}
+            <!--OR Displaying errors message using django messages framework liek this-->
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        <!--Displaying the result of Polls.-->
+            <h3>Result of Votes are:</h3>
+            <ul>
+                {% for choice in poll.choice_set.all %}
+                    <li>{{ choice.choice_text }} - {{ choice.votes }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

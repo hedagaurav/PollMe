@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    PollMe | Delete Poll
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <h3 class="text-center">this is delete poll page</h3>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <p>{{ poll }}</p>
+                    <input type="submit" class="btn btn-danger" value="Confirm Delete">
+                    <button type="button" class="btn btn-light" onclick="javascript:history.go(-1)">Go Back</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

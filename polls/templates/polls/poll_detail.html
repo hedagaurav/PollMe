@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}
+    PollMe | Poll Details
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <h2>Poll Detail Page</h2>
+
+        <div class="col-md-6">
+
+            <h5>Que: {{ poll }}</h5>
+            <form action="{% url 'polls:vote' poll_id=poll.id %}" method="post">
+                {% csrf_token %}
+                {% for choice in poll.choice_set.all %}
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                    <br>
+                {% endfor %}
+                <button type="submit">Vote</button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

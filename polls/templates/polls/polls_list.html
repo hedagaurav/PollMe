@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+    PollMe | Polls List
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Welcome to Polls List.</h2>
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2">
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!--To add a new poll.-->
+                <a href="{% url 'polls:new' %}" class="btn btn-primary" style="margin-bottom: 10px">Add New
+                    <i class="fas fa-plus"></i></a>
+                <ul class="list-group">
+                    {% for poll in polls %}
+                        <li class="list-group-item">
+                            {# we can pass poll id in 2 ways as shown below #}
+                            <a href="{% url 'polls:detail' poll_id=poll.id %}">{{ poll }}</a>
+                            {% if request.user == poll.owner %}
+                                <div class="float-right">
+                                    <a href="{% url 'polls:edit_poll' poll.id %}">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

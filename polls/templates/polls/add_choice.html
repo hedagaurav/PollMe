@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% if edit_mode %}
+        PollMe | Edit Choice
+    {% else %}
+        PollMe | Add Choice
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                {% if edit_mode %}
+                    <h3 class="text-center">Edit Choice using form below</h3>
+                {% else %}
+                    <h3 class="text-center">Add New Choice using form below</h3>
+                {% endif %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Update Choice" class="btn btn-outline-primary">
+                    {% if edit_mode %}
+                        <a href="{% url 'polls:delete_choice' choice.id %}" class="btn btn-outline-danger">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    {% endif %}
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

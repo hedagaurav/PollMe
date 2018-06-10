@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+    PollMe | Edit Poll
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <h4 class="text-center">Edit Poll using the form below.</h4>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Update Poll
+                    </button>
+                    <a href="{% url 'polls:delete_poll' poll.id %}" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete Poll</a>
+                </form>
+
+                <br>
+                <div class="col-sm-8">
+                    <h3 class="text-center">Choices</h3>
+                    <a href="{% url 'polls:add_choice' poll.id %}" class="btn btn-warning" style="margin-bottom:10px">
+                        <i class="fas fa-plus"></i> Add Choice</a>
+                    <br>
+                    <small>Click <i class="fas fa-pencil-alt"></i> icon to update or delete choice.</small>
+                    {% for choice in poll.choice_set.all %}
+                        <div class="list-group">
+                            <li type="None" class="list-group-item">{{ choice.choice_text }}
+                                <div class="float-right">
+                                    <a href="{% url 'polls:edit_choice' choice.id %}"
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
